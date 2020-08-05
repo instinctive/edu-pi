@@ -1,5 +1,5 @@
 # Pi
-# ----------
+----------
 
 Calculate Pi using a couple of techniques:
 
