@@ -3,6 +3,7 @@ module Pi ( Calc(..), darts, leibniz, parse ) where
 import Prelude hiding ( pi )
 import Control.Monad.Random.Class ( MonadRandom, getRandomR )
 
+-- An iterative monadic calculation, so we can report in occasionally.
 newtype Calc m = Calc ( m ( Double, Calc m ) )
 
 -- ----------------------------------------------------------------------
