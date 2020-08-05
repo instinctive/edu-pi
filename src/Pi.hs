@@ -4,12 +4,12 @@ import Prelude hiding ( pi )
 import Control.Monad.Random.Class ( MonadRandom, getRandomR )
 
 -- An iterative monadic calculation, so we can report in occasionally.
-newtype Calc m = Calc ( m ( Double, Calc m ) )
+newtype Calc m a = Calc ( m ( a, Calc m a ) )
 
 -- ----------------------------------------------------------------------
 -- The Leibniz formula: pi/4 = 1 - 1/3 + 1/5 - 1/7 + ...
 
-leibniz :: Monad m => Calc m
+leibniz :: Monad m => Calc m Double
 leibniz = Calc $ go (0::Int) 0 where
     go !n !pi4 = pure ( 4*pi4, Calc $ go (n+1) (pi4 + term) ) where
         term = num / fromIntegral (n*2 + 1)
@@ -18,7 +18,7 @@ leibniz = Calc $ go (0::Int) 0 where
 -- ----------------------------------------------------------------------
 -- Throw darts at a bounding box and see which end up inside a 0.5 radius.
 
-darts :: MonadRandom m => Calc m
+darts :: MonadRandom m => Calc m Double
 darts = Calc $ go (0::Int) (0::Int) where
     go !h !t = do
         h' <- bool h (h+1) <$> trial
@@ -36,7 +36,7 @@ trial = inCircle <$> rnd <*> rnd where
 
 -- ----------------------------------------------------------------------
 
-parse :: MonadRandom m => [String] -> Calc m
+parse :: MonadRandom m => [String] -> Calc m Double
 parse ["leibniz"] = leibniz
 parse ["darts"]   = darts
 parse s = error $ "invalid arguments: " <> show s
