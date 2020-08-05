@@ -1,10 +1,10 @@
 module Main ( main ) where
 
-import Prelude hiding ( pi )
+import Prelude hiding     ( pi      )
 import System.Environment ( getArgs )
 
-import Pi
-import Report
+import Pi     ( Calc(Calc), parse )
+import Report ( mkReporter        )
 
 main :: IO ()
 main = do
