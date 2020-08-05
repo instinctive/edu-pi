@@ -19,7 +19,7 @@ leibniz = Calc $ go (0::Int) 0 where
 -- Throw darts at a bounding box and see which end up inside a 0.5 radius.
 
 darts :: MonadRandom m => Calc m Double
-darts = Calc $ go (0::Int) (0::Int) where
+darts = Calc $ go 0 0 where
     go !h !t = do
         h' <- bool h (h+1) <$> trial
         pure (area h t, Calc $ go h' (t+1))
