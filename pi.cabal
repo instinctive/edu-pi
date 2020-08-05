@@ -1,0 +1,70 @@
+cabal-version: 3.0
+-- vim: foldmethod=marker
+version: 0.1.0.0
+name: pi
+
+common shared -- {{{1
+  default-language: Haskell2010
+  build-depends: base
+    , relude
+  mixins: base hiding ( Prelude )
+    , relude ( Relude as Prelude )
+  -- default extensions {{{2
+  default-extensions:
+    AllowAmbiguousTypes
+    BangPatterns
+    ConstraintKinds
+    DataKinds
+    DeriveGeneric
+    FlexibleContexts
+    FlexibleInstances
+    GADTs
+    GeneralizedNewtypeDeriving
+    InstanceSigs
+    KindSignatures
+    LambdaCase
+    MultiParamTypeClasses
+    OverloadedStrings
+    PolyKinds
+    RankNTypes
+    RecordWildCards
+    ScopedTypeVariables
+    StandaloneDeriving
+    TupleSections
+    TypeApplications
+    TypeFamilies
+    TypeOperators
+    ViewPatterns
+    -- }}}2
+  -- ghc-options {{{2
+  ghc-options:
+    -O2
+    -flate-specialise 
+    -fspecialise-aggressively
+    -Wall
+    -Wcompat
+    -Widentities
+    -Wincomplete-record-updates
+    -Wincomplete-uni-patterns
+    -Wmissing-export-lists
+    -Wpartial-fields
+    -Wredundant-constraints
+    -- }}}2
+  -- }}}1
+
+library
+  import: shared
+  hs-source-dirs: src
+  exposed-modules: Pi, Report
+  build-depends:    
+    , clock
+    , formatting
+    , random
+    , MonadRandom
+
+executable exe-pi
+  import: shared
+  hs-source-dirs: app
+  main-is: Main.hs
+  build-depends:    
+    , pi
